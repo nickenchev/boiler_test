@@ -28,6 +28,12 @@ BlankPart::BlankPart() : logger("Playground Part")
 	auto sprite = ecs.addComponent<SpriteComponent>(player, pos->frame);
 	sprite->spriteFrame = spriteSheet->getFrame("forest.png");
 	ecs.addComponent<VelocityComponent>(player);
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		Entity ent = ecs.newEntity();
+		
+	}
 }
 
 void BlankPart::onStart()

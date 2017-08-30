@@ -13,7 +13,7 @@ public:
 
 	void update(ComponentStore &store, const double delta) const override
 	{
-		Size screenSize = Boiler::getInstance().getScreenSize();
+		Size screenSize = Boiler::getInstance().getRenderer().getScreenSize();
 
 		for (auto &entity : getEntities())
 		{
