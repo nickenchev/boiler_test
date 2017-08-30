@@ -22,17 +22,24 @@ BlankPart::BlankPart() : logger("Playground Part")
 
 	// create our entity and setup its components
 	int tileSize = 150;
-	player = ecs.newEntity();
 	auto pos = ecs.addComponent<PositionComponent>(player, Rect(40, 20, tileSize, tileSize));
 	pos->absolute = true;
 	auto sprite = ecs.addComponent<SpriteComponent>(player, pos->frame);
 	sprite->spriteFrame = spriteSheet->getFrame("forest.png");
 	ecs.addComponent<VelocityComponent>(player);
 
-	for (int i = 0; i < 1000; ++i)
+	for (int i = 0; i < 2000; ++i)
 	{
-		Entity ent = ecs.newEntity();
-		
+		int x = rand() % Boiler::getInstance().getRenderer().getScreenSize().getWidth();
+		int y = rand() % Boiler::getInstance().getRenderer().getScreenSize().getHeight();
+		Entity enemy = ecs.newEntity();
+		enemies.push_back(enemy);
+
+		auto pos = ecs.addComponent<PositionComponent>(enemy, Rect(x, y, 20, 20));
+		pos->absolute = true;
+		auto sprite = ecs.addComponent<SpriteComponent>(enemy, pos->frame);
+		sprite->spriteFrame = spriteSheet->getFrame("forest.png");
+		ecs.addComponent<VelocityComponent>(enemy);
 	}
 }
 
