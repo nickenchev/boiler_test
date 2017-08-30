@@ -12,7 +12,6 @@ class BlankPart : public Part
 {
 	Logger logger;
     std::shared_ptr<const SpriteSheet> spriteSheet;
-	Entity player;
 	
 public:
     BlankPart();

@@ -20,21 +20,15 @@ BlankPart::BlankPart() : logger("Playground Part")
 		.expects<PositionComponent>(ecs.getComponentMapper())
 		.expects<VelocityComponent>(ecs.getComponentMapper());
 
-	// create our entity and setup its components
-	int tileSize = 150;
-	auto pos = ecs.addComponent<PositionComponent>(player, Rect(40, 20, tileSize, tileSize));
-	pos->absolute = true;
-	auto sprite = ecs.addComponent<SpriteComponent>(player, pos->frame);
-	sprite->spriteFrame = spriteSheet->getFrame("forest.png");
-	ecs.addComponent<VelocityComponent>(player);
-
-	for (int i = 0; i < 1000; ++i)
+	const int maxTileSize = 100;
+	for (int i = 0; i < 100; ++i)
 	{
 		int x = rand() % Boiler::getInstance().getRenderer().getScreenSize().getWidth();
 		int y = rand() % Boiler::getInstance().getRenderer().getScreenSize().getHeight();
-		Entity enemy = ecs.newEntity();
+		int size = rand() % (maxTileSize + 1 - 30) + 30;
 
-		auto pos = ecs.addComponent<PositionComponent>(enemy, Rect(x, y, 20, 20));
+		Entity enemy = ecs.newEntity();
+		auto pos = ecs.addComponent<PositionComponent>(enemy, Rect(x, y, size, size));
 		pos->absolute = true;
 		auto sprite = ecs.addComponent<SpriteComponent>(enemy, pos->frame);
 		sprite->spriteFrame = spriteSheet->getFrame("forest.png");
@@ -48,7 +42,7 @@ void BlankPart::onStart()
     Boiler::getInstance().addKeyInputListener([this](const KeyInputEvent &event)
 	{
 		EntityComponentSystem &ecs = Boiler::getInstance().getEcs();
-		VelocityComponent &velocity = ecs.getComponentStore().retrieve<VelocityComponent>(this->player);
+		// VelocityComponent &velocity = ecs.getComponentStore().retrieve<VelocityComponent>(this->player);
 
 		if (event.state == ButtonState::UP)
 		{
@@ -56,25 +50,25 @@ void BlankPart::onStart()
 			{
 				Boiler::getInstance().quit();
 			}
-			else if (event.keyCode == SDLK_a)
-			{
-				velocity.velocity.x = 0;
-			}
-			else if (event.keyCode == SDLK_d)
-			{
-				velocity.velocity.x = 0;
-			}
-		}
-		else if (event.state == ButtonState::DOWN)
-		{
-			if (event.keyCode == SDLK_a)
-			{
-				velocity.velocity.x = -3.0f;
-			}
-			else if (event.keyCode == SDLK_d)
-			{
-				velocity.velocity.x = 3.0f;
-			}
+		// 	else if (event.keyCode == SDLK_a)
+		// 	{
+		// 		velocity.velocity.x = 0;
+		// 	}
+		// 	else if (event.keyCode == SDLK_d)
+		// 	{
+		// 		velocity.velocity.x = 0;
+		// 	}
+		// }
+		// else if (event.state == ButtonState::DOWN)
+		// {
+		// 	if (event.keyCode == SDLK_a)
+		// 	{
+		// 		velocity.velocity.x = -3.0f;
+		// 	}
+		// 	else if (event.keyCode == SDLK_d)
+		// 	{
+		// 		velocity.velocity.x = 3.0f;
+		// 	}
 		}
 	});
 }
