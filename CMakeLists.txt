@@ -17,7 +17,7 @@ add_executable(ecsdemo
   src/blankpart.cpp)
 
 target_include_directories(ecsdemo PUBLIC
-  /Users/nenchev/Developer/projects/boiler/include)
+  /home/nenchev/Developer/projects/boiler/include)
 
 target_link_libraries(ecsdemo ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${ZLIB_LIBRARY} ${OPENGL_LIBRARY} ${GLEW_LIBRARY}
-	/Users/nenchev/Developer/projects/boiler/build/libboiler.a)
+	/home/nenchev/Developer/projects/boiler/build/libboiler.a)
