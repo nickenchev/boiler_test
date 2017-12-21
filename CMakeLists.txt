@@ -11,13 +11,12 @@ find_package(SDL2_image REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(Boiler REQUIRED)
 
 add_executable(ecsdemo
   src/main.cpp
   src/blankpart.cpp)
 
-target_include_directories(ecsdemo PUBLIC
-  /home/nenchev/Developer/projects/boiler/include)
+include_directories(${BOILER_INCLUDE_DIR} ${SDL2_INCLUDE_DIR})
 
-target_link_libraries(ecsdemo ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${ZLIB_LIBRARY} ${OPENGL_LIBRARY} ${GLEW_LIBRARY}
-	/home/nenchev/Developer/projects/boiler/build/libboiler.a)
+target_link_libraries(ecsdemo ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${ZLIB_LIBRARY} ${OPENGL_LIBRARY} ${GLEW_LIBRARY} ${BOILER_LIBRARY})
