@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <boiler.h>
+#include "video/openglrenderer.h"
 #include "blankpart.h"
 
 int main(int argc, char *argv[])
