@@ -3,12 +3,13 @@
 #include "video/systems/rendersystem.h"
 #include "core/components/positioncomponent.h"
 #include "core/components/spritecomponent.h"
+#include "core/spriteloader.h"
 #include "gravitysystem.h"
 #include "velocitycomponent.h"
 
 BlankPart::BlankPart() : logger("Playground Part")
 {
-	spriteSheet = Boiler::getInstance().getSpriteLoader().loadSheet("data/terrain.json");
+	spriteSheet = Boiler::getInstance().getSpriteLoader().loadJsonArray("data/terrain.json");
 	EntityComponentSystem &ecs = Boiler::getInstance().getEcs();
 
 	// add the rendering system
@@ -19,7 +20,7 @@ BlankPart::BlankPart() : logger("Playground Part")
 	ecs.getComponentSystems().registerSystem<GravitySystem>()
 		.expects<PositionComponent>(ecs.getComponentMapper())
 		.expects<VelocityComponent>(ecs.getComponentMapper());
-
+	
 	const int maxTileSize = 100;
 	for (int i = 0; i < 100; ++i)
 	{
@@ -50,25 +51,8 @@ void BlankPart::onStart()
 			{
 				Boiler::getInstance().quit();
 			}
-		// 	else if (event.keyCode == SDLK_a)
-		// 	{
-		// 		velocity.velocity.x = 0;
-		// 	}
-		// 	else if (event.keyCode == SDLK_d)
-		// 	{
-		// 		velocity.velocity.x = 0;
-		// 	}
-		// }
-		// else if (event.state == ButtonState::DOWN)
-		// {
-		// 	if (event.keyCode == SDLK_a)
-		// 	{
-		// 		velocity.velocity.x = -3.0f;
-		// 	}
-		// 	else if (event.keyCode == SDLK_d)
-		// 	{
-		// 		velocity.velocity.x = 3.0f;
-		// 	}
 		}
 	});
+	
+    Boiler::getInstance().getRenderer().setClearColor(Color3(0.2f, 0.2f, 0.4f));
 }
