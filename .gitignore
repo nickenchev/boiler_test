@@ -2,3 +2,5 @@ build/
 .DS_Store
 /.ycm_extra_conf.py
 .cquery_cache_index/
+/src/boiler
+data

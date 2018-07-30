@@ -11,12 +11,13 @@ find_package(SDL2_image REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
-find_package(Boiler REQUIRED)
+
+include(/home/nenchev/Developer/projects/boiler/CMakeLists.txt)
 
 add_executable(ecsdemo
   src/main.cpp
   src/blankpart.cpp)
 
-include_directories(${BOILER_INCLUDE_DIR} ${SDL2_INCLUDE_DIR})
+include_directories(${SDL2_INCLUDE_DIR})
 
-target_link_libraries(ecsdemo ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${ZLIB_LIBRARY} ${OPENGL_LIBRARY} ${GLEW_LIBRARY} ${BOILER_LIBRARY})
+target_link_libraries(ecsdemo ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${ZLIB_LIBRARY} ${OPENGL_LIBRARY} ${GLEW_LIBRARY} boiler)
