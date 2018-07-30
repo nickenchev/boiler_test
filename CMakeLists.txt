@@ -12,7 +12,7 @@ find_package(ZLIB REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 
-include(/home/nenchev/Developer/projects/boiler/CMakeLists.txt)
+include(~/Developer/projects/boiler/CMakeLists.txt)
 
 add_executable(ecsdemo
   src/main.cpp
