@@ -9,20 +9,20 @@
 
 BlankPart::BlankPart() : logger("Playground Part")
 {
-	spriteSheet = Boiler::getInstance().getSpriteLoader().loadJsonArray("data/terrain.json");
+	spriteSheet = Boiler::getInstance().getSpriteLoader().loadJsonArray("data/triptych.json");
 	EntityComponentSystem &ecs = Boiler::getInstance().getEcs();
 
 	// add the rendering system
 	ecs.getComponentSystems().registerSystem<RenderSystem>()
-		.expects<PositionComponent>(ecs.getComponentMapper())
-		.expects<SpriteComponent>(ecs.getComponentMapper());
+		.expects<PositionComponent>()
+		.expects<SpriteComponent>();
 
 	ecs.getComponentSystems().registerSystem<GravitySystem>()
-		.expects<PositionComponent>(ecs.getComponentMapper())
-		.expects<VelocityComponent>(ecs.getComponentMapper());
-	
+		.expects<PositionComponent>()
+		.expects<VelocityComponent>();
+
 	const int maxTileSize = 100;
-	for (int i = 0; i < 100; ++i)
+	for (int i = 0; i < 50; ++i)
 	{
 		int x = rand() % Boiler::getInstance().getRenderer().getScreenSize().getWidth();
 		int y = rand() % Boiler::getInstance().getRenderer().getScreenSize().getHeight();
@@ -32,7 +32,7 @@ BlankPart::BlankPart() : logger("Playground Part")
 		auto pos = ecs.addComponent<PositionComponent>(enemy, Rect(x, y, size, size));
 		pos->absolute = true;
 		auto sprite = ecs.addComponent<SpriteComponent>(enemy, pos->frame);
-		sprite->spriteFrame = spriteSheet->getFrame("forest.png");
+		sprite->spriteFrame = spriteSheet->getFrame("diskette.png");
 		ecs.addComponent<VelocityComponent>(enemy);
 	}
 }
