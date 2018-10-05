@@ -1,7 +1,7 @@
 #include <iostream>
 #include "blankpart.h"
 #include "video/systems/rendersystem.h"
-#include "core/components/positioncomponent.h"
+ "core/components/positioncomponent.h"
 #include "core/components/spritecomponent.h"
 #include "core/spriteloader.h"
 #include "gravitysystem.h"
@@ -20,30 +20,15 @@ BlankPart::BlankPart() : logger("Playground Part")
 	ecs.getComponentSystems().registerSystem<GravitySystem>()
 		.expects<PositionComponent>()
 		.expects<VelocityComponent>();
-
-	const int maxTileSize = 100;
-	for (int i = 0; i < 50; ++i)
-	{
-		int x = rand() % Boiler::getInstance().getRenderer().getScreenSize().getWidth();
-		int y = rand() % Boiler::getInstance().getRenderer().getScreenSize().getHeight();
-		int size = rand() % (maxTileSize + 1 - 30) + 30;
-
-		Entity enemy = ecs.newEntity();
-		auto pos = ecs.addComponent<PositionComponent>(enemy, Rect(x, y, size, size));
-		pos->absolute = true;
-		auto sprite = ecs.addComponent<SpriteComponent>(enemy, pos->frame);
-		sprite->spriteFrame = spriteSheet->getFrame("diskette.png");
-		ecs.addComponent<VelocityComponent>(enemy);
-	}
 }
 
 void BlankPart::onStart()
 {
     Boiler::getInstance().getRenderer().setClearColor(Color3(0.2f, 0.2f, 0.4f));
-    Boiler::getInstance().addKeyInputListener([this](const KeyInputEvent &event)
+    auto keyListener = [this](const KeyInputEvent &event)
 	{
+		const int maxTileSize = 100;
 		EntityComponentSystem &ecs = Boiler::getInstance().getEcs();
-		// VelocityComponent &velocity = ecs.getComponentStore().retrieve<VelocityComponent>(this->player);
 
 		if (event.state == ButtonState::UP)
 		{
@@ -52,7 +37,25 @@ void BlankPart::onStart()
 				Boiler::getInstance().quit();
 			}
 		}
-	});
+		if (event.state == ButtonState::DOWN)
+		{
+			if (event.keyCode == SDLK_SPACE)
+			{
+				int x = rand() % Boiler::getInstance().getRenderer().getScreenSize().getWidth();
+				int y = 0;
+				int size = rand() % (maxTileSize + 1 - 30) + 30;
+
+				Entity enemy = ecs.newEntity();
+				auto pos = ecs.createComponent<PositionComponent>(enemy, Rect(x, y, size, size));
+				pos->absolute = true;
+				auto sprite = ecs.createComponent<SpriteComponent>(enemy, pos->frame);
+				sprite->spriteFrame = spriteSheet->getFrame("diskette.png");
+				auto velocity = ecs.createComponent<VelocityComponent>(enemy);
+				velocity->velocity.x = 50;
+			}
+		}
+	};
+	Boiler::getInstance().addKeyInputListener(keyListener);
 	
     Boiler::getInstance().getRenderer().setClearColor(Color3(0.2f, 0.2f, 0.4f));
 }
